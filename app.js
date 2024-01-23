@@ -14,7 +14,7 @@ const { createUser, login } = require('./controllers/users');
 
 const auth = require('./middlewares/auth');
 const userRouter = require('./routes/users');
-// const cardsRouter = require('./routes/cards');
+const moviesRouter = require('./routes/movies');
 const pageNotFound = require('./routes/page-not-found');
 
 const { errorHandler } = require('./middlewares/error-handler');
@@ -43,7 +43,7 @@ app.post('/signin', validateJoiSignin, login);
 
 app.use(auth);
 app.use('/users', userRouter);
-// app.use('/cards', cardsRouter);
+app.use('/movies', moviesRouter);
 
 app.use('*', pageNotFound);
 
