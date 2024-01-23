@@ -12,7 +12,7 @@ module.exports.getMovies = (req, res, next) => {
     .catch((error) => next(error));
 };
 
-module.exports.createMovie = (req, res, next) => {
+module.exports.saveMovie = (req, res, next) => {
   const {
     country,
     director,
