@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const userSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({
 
   country: {
     type: String,
@@ -28,18 +28,11 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Нужно заполнить описание фильма'],
   },
 
-  name: {
-    type: String,
-    required: [true, 'Поле name должно быть заполнено'],
-    minlength: [2, 'Минимальная длина поля "name" - 2'],
-    maxlength: [30, 'Максимальная длина поля "name" - 30'],
-  },
-
   image: {
     type: String,
     ruquired: [true, 'Для фильма нужен постер'],
     validate: {
-      validator: (v) => validator.isURL(v),
+      validator: (value) => validator.isURL(value),
       message: 'Некорректный URL для постера',
     },
   },
@@ -48,7 +41,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     ruquired: [true, 'Для фильма нужен трейлер'],
     validate: {
-      validator: (v) => validator.isURL(v),
+      validator: (value) => validator.isURL(value),
       message: 'Некорректный URL для трейлера',
     },
   },
@@ -57,7 +50,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     ruquired: [true, 'Нет картинки для предпросмотра'],
     validate: {
-      validator: (v) => validator.isURL(v),
+      validator: (value) => validator.isURL(value),
       message: 'Некорректный URL для постера',
     },
   },
@@ -66,6 +59,7 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: [true, 'Поле "owner" должно быть заполнено'],
+    select: false,
   },
 
   // film id in MoviesExplorer response
@@ -86,4 +80,4 @@ const userSchema = new mongoose.Schema({
 
 }, { versionKey: false });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('movie', movieSchema);
