@@ -33,7 +33,8 @@ module.exports.createUser = (req, res, next) => {
         }
 
         return next(error);
-      }));
+      }))
+    .catch((error) => next(error));
 };
 
 module.exports.updateUserInfo = (req, res, next) => {
