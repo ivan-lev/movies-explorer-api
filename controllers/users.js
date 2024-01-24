@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 const { NotFoundError, ValidationError, ConflictError } = require('../errors');
 
-const { JWT_SECRET = 'secret-key', NODE_ENV = 'production' } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 module.exports.createUser = (req, res, next) => {
   const {
