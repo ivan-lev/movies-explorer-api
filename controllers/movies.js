@@ -65,7 +65,7 @@ module.exports.deleteMovie = (req, res, next) => {
       }
       // если совпадают, то удаляем карточку
       return Movie.deleteOne(movie)
-        .then(() => res.send('Карточка удалена: ', movie))
+        .then(() => res.send(movie))
         .catch((error) => next(error));
     })
     .catch((error) => {
