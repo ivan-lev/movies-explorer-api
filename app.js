@@ -18,7 +18,9 @@ const {
 
 const app = express();
 
-mongoose.connect(DB_URL);
+mongoose
+  .connect(DB_URL)
+  .catch((error) => console.log(error));
 
 app.use(limiter); // limit requests count
 app.use(cors()); // cross-domain settings
@@ -26,7 +28,7 @@ app.use(requestLogger); // winston requests logger
 app.use(helmet()); // protect headers
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(routes);
+app.use(routes); // all routes goes through here
 
 app.use(errorLogger); // winston error logger
 app.use(errors()); // celebrate error handler
