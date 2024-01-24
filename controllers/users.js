@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const { NotFoundError, ValidationError, ConflictError } = require('../errors');
+const { ERROR_MESSAGES } = require('../constants');
 
 const { JWT_SECRET, NODE_ENV } = process.env;
 
@@ -25,11 +26,11 @@ module.exports.createUser = (req, res, next) => {
       })
       .catch((error) => {
         if (error.name === 'ValidationError') {
-          return next(new ValidationError('При создании пользователя переданы невалидные данные.'));
+          return next(new ValidationError(ERROR_MESSAGES.USER_WRONG_DATA));
         }
 
         if (error.code === 11000) {
-          return next(new ConflictError('Такой пользователь уже существует.'));
+          return next(new ConflictError(ERROR_MESSAGES.USER_EXISTS));
         }
 
         return next(error);
@@ -53,11 +54,11 @@ module.exports.updateUserInfo = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        return next(new ValidationError('При обновлении профиля переданы невалидные данные.'));
+        return next(new ValidationError(ERROR_MESSAGES.USER_UPDATE_ERROR));
       }
 
       if (error.name === 'CastError') {
-        return next(new NotFoundError('Пользователь с таким _id не найден.'));
+        return next(new NotFoundError(ERROR_MESSAGES.USER_NOT_FOUND));
       }
 
       return next(error);
@@ -91,11 +92,11 @@ module.exports.getUserInfo = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((error) => {
       if (error.name === 'CastError') {
-        return next(new ValidationError('Передан некорректный _id пользователя.'));
+        return next(new ValidationError(ERROR_MESSAGES.USER_WRONG_ID));
       }
 
       if (error.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('Пользователь с таким _id не найден.'));
+        return next(new NotFoundError(ERROR_MESSAGES.USER_NOT_FOUND));
       }
 
       return next(error);

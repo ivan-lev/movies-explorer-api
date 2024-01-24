@@ -6,6 +6,8 @@ const {
   RightsError,
 } = require('../errors');
 
+const { ERROR_MESSAGES } = require('../constants');
+
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})
     .then((movies) => res.send(movies))
@@ -45,7 +47,7 @@ module.exports.saveMovie = (req, res, next) => {
     .then((movie) => res.status(201).send(movie))
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        return next(new ValidationError('При создании карточки переданы невалидные данные.'));
+        return next(new ValidationError(ERROR_MESSAGES.MOVIE_WRONG_DATA));
       }
 
       return next(error);
@@ -61,7 +63,7 @@ module.exports.deleteMovie = (req, res, next) => {
     .then((movie) => {
       // если _id не совпадают, то отправляем ошибку
       if (currentUserId.toString() !== movie.owner.toString()) {
-        return next(new RightsError('Отсутствуют права для удаления карточки.'));
+        return next(new RightsError(ERROR_MESSAGES.MOVIE_UNAUTH_DELETION));
       }
       // если совпадают, то удаляем карточку
       return Movie.deleteOne(movie)
@@ -70,11 +72,11 @@ module.exports.deleteMovie = (req, res, next) => {
     })
     .catch((error) => {
       if (error.name === 'CastError') {
-        return next(new ValidationError('Передан некорректный _id карточки для удаления.'));
+        return next(new ValidationError(ERROR_MESSAGES.MOVIE_WRONG_ID));
       }
 
       if (error.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('Карточка с таким _id не найдена.'));
+        return next(new NotFoundError(ERROR_MESSAGES.MOVIE_NOT_FOUND));
       }
 
       return next(error);

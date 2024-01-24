@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 
-const linkRegEx = /(https?:\/\/)(www\.)?[\w-]+\.[a-z]{2,6}[\w\-._~:/?#[\]@!$&'()*+,;=]*/;
+const { URL_REGEXP } = require('../constants');
 
 module.exports.validateJoiCreateMovie = celebrate({
   body: Joi.object().keys({
@@ -9,9 +9,9 @@ module.exports.validateJoiCreateMovie = celebrate({
     duration: Joi.number().min(0).required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().uri().required().pattern(linkRegEx),
-    trailer: Joi.string().uri().required().pattern(linkRegEx),
-    thumbnail: Joi.string().uri().required().pattern(linkRegEx),
+    image: Joi.string().uri().required().pattern(URL_REGEXP),
+    trailer: Joi.string().uri().required().pattern(URL_REGEXP),
+    thumbnail: Joi.string().uri().required().pattern(URL_REGEXP),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
