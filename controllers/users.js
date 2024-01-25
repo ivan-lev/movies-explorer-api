@@ -61,6 +61,10 @@ module.exports.updateUserInfo = (req, res, next) => {
         return next(new NotFoundError(ERROR_MESSAGES.USER_NOT_FOUND));
       }
 
+      if (error.code === 11000) {
+        return next(new ConflictError(ERROR_MESSAGES.USER_EXISTS));
+      }
+
       return next(error);
     });
 };
