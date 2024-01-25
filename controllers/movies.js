@@ -24,7 +24,7 @@ module.exports.saveMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailerLink = req.body.trailer,
+    trailerLink,
     thumbnail,
     owner = req.user._id,
     movieId,
