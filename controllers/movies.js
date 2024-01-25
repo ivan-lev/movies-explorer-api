@@ -9,7 +9,9 @@ const {
 const { ERROR_MESSAGES } = require('../constants');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({})
+  const owner = req.user._id;
+
+  Movie.find({ owner })
     .then((movies) => res.send(movies))
     .catch((error) => next(error));
 };
