@@ -30,7 +30,7 @@ const movieSchema = new mongoose.Schema({
 
   image: {
     type: String,
-    ruquired: [true, 'Для фильма нужен постер'],
+    required: [true, 'Для фильма нужен постер'],
     validate: {
       validator: (value) => validator.isURL(value),
       message: 'Некорректный URL для постера',
@@ -39,7 +39,7 @@ const movieSchema = new mongoose.Schema({
 
   trailerLink: {
     type: String,
-    ruquired: [true, 'Для фильма нужен трейлер'],
+    required: [true, 'Для фильма нужен трейлер'],
     validate: {
       validator: (value) => validator.isURL(value),
       message: 'Некорректный URL для трейлера',
@@ -48,7 +48,7 @@ const movieSchema = new mongoose.Schema({
 
   thumbnail: {
     type: String,
-    ruquired: [true, 'Нет картинки для предпросмотра'],
+    required: [true, 'Нет картинки для предпросмотра'],
     validate: {
       validator: (value) => validator.isURL(value),
       message: 'Некорректный URL для постера',
