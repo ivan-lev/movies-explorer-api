@@ -12,9 +12,9 @@ const { errorHandler } = require('./middlewares/error-handler');
 const { routes } = require('./routes');
 
 const {
-  PORT = 3000,
-  DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb',
-} = process.env;
+  PORT,
+  DB_URL,
+} = require('./config');
 
 const app = express();
 
@@ -36,5 +36,5 @@ app.use(errorHandler); // final error handler
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
-  console.log(`DB is ${DB_URL}`);
+  console.log(`DB path is ${DB_URL}`);
 });
